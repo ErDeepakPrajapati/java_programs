@@ -1,0 +1,45 @@
+/*Create a Thread called "LotteryThread" that takes an array and stores 5 distinct random numbers in this array between 1 to 20. 
+After storing these numbers it returns the control back to the main thread. The main thread now accepts a number from user. 
+If number exists in the array the user wins the lottery and if number is not found in the array, the user loses the lottery.
+*/
+
+/* Note : Save this file as LotteryTester.java */
+package Assignment;
+import java.util.Scanner;
+
+class LotteryThread extends Thread {
+	int num[];
+	public LotteryThread(int[] num) {
+		this.num = num;
+	}
+	public void run() {
+		for(int i = 0; i < num.length; i++) {
+			num[i] = (int) ((Math.random() * 19) + 1);
+		}
+	}
+}
+
+public class LotteryTester {
+	public static void main(String args[]) {
+		int num[] = new int[5];
+		int temp = 0;
+		LotteryThread lt = new LotteryThread(num);
+		lt.start();
+		//int arg = Integer.parseInt(args[0]);
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter a number : ");
+		int arg = in.nextInt();
+		for(int i = 0; i < num.length; i++) {
+			System.out.println(num[i]);
+			if(arg == num[i]) {
+				temp = num[i];
+				break;
+			}
+		}
+		if(arg == temp) {
+			System.out.println("You Won!! Lottery");
+		}
+		else
+			System.out.println("You Lose!! Lottery");
+	}
+}
